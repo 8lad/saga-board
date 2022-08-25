@@ -1,7 +1,8 @@
 .cardbox {
   perspective: 500px;
   margin: 15px;
-  &:hover .card {
+  outline: none;
+  &.active .card {
     transform: rotateY(180deg);
   }
 }
@@ -9,8 +10,8 @@
 .card {
   position: relative;
   border-radius: 5%;
-  width: 250px;
-  height: 250px;
+  width: 180px;
+  height: 180px;
   background: #fff;
   transform-style: preserve-3d;
   transition: 0.8s ease;
@@ -24,25 +25,39 @@
       rgba(77, 31, 82, 1) 89%
     );
   }
+  @media (max-width: 1650px) {
+    width: 160px;
+    height: 160px;
+  }
+  @media (max-width: 1400px) {
+    width: 130px;
+    height: 130px;
+  }
+  @media (max-width: 1198px) {
+    width: 110px;
+    height: 110px;
+  }
+  @media (max-width: 1054px) {
+    width: 90px;
+    height: 90px;
+  }
+  @media (max-width: 894px) {
+    width: 70px;
+    height: 70px;
+  }
 }
 
-.card-front,
 .card-back {
   position: absolute;
   top: 0;
   left: 0;
-  width: 250px;
-  height: 250px;
+  width: 100%;
+  height: 100%;
   color: #fff;
   backface-visibility: hidden;
-}
-
-.card-front {
-  font-size: 40px;
-  justify-content: center;
-  text-align: center;
-  display: flex;
-  align-items: center;
+  &.card-back--matched {
+    filter: sepia(100%);
+  }
 }
 
 .card-back {
@@ -53,7 +68,7 @@
   align-items: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 0 0;
+  background-position: center;
   transform: rotateY(180deg);
   border-radius: 5%;
 }

@@ -1,18 +1,32 @@
+import { useDispatch } from "react-redux";
+import clsx from "clsx";
+import { setMatchData } from "../../redux/cardsSlice";
+import { CartImageOptions } from "../../utils/helpers";
 import "./SingleCard.scss";
 
-export default function SingleCard() {
+const SingleCard: React.FC<CartImageOptions> = ({
+  id,
+  imageUrl,
+  isMatched,
+  isRotated,
+}) => {
+  const dispatch = useDispatch();
+
   return (
-    <div className="cardbox">
+    <div
+      className={clsx("cardbox", (isRotated || isMatched) && "active")}
+      onClick={() => dispatch(setMatchData({ imageUrl, id }))}
+    >
       <div className="card card--bg">
-        <div className="card-front" />
         <div
-          className="card-back"
+          className={clsx("card-back", isMatched && "card-back--matched")}
           style={{
-            backgroundImage:
-              "url(https://www.cabq.gov/artsculture/biopark/news/10-cool-facts-about-penguins/@@images/1a36b305-412d-405e-a38b-0947ce6709ba.jpeg)",
+            backgroundImage: `url(${imageUrl})`,
           }}
         />
       </div>
     </div>
   );
-}
+};
+
+export default SingleCard;

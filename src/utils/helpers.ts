@@ -1,3 +1,10 @@
+export interface CartImageOptions {
+  id: number;
+  imageUrl: string;
+  isMatched: boolean;
+  isRotated: boolean;
+}
+
 export function createRandomIndex(max: number) {
   return Number((Math.random() * max).toFixed());
 }
@@ -13,4 +20,16 @@ export function createArrayWithRandomIndexes(arr: string[]): string[] {
     }
   }
   return resultedArr;
+}
+
+export function createImageItemsArray(arr: string[]): CartImageOptions[] {
+  const baseArray = createArrayWithRandomIndexes([...arr].concat(arr)).map(
+    (item: string, index: number) => ({
+      id: index,
+      imageUrl: item,
+      isMatched: false,
+      isRotated: false,
+    }),
+  );
+  return baseArray;
 }
