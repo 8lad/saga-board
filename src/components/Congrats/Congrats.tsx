@@ -3,11 +3,15 @@ import Confetti from "react-confetti";
 import { useDispatch, useSelector } from "react-redux";
 import { SingleButton } from "../SingleButton/SingleButton";
 import { resetAllState, GameState } from "../../redux/cardsSlice";
-import { complitedRandomImages } from "../../utils/constants";
 import { TimerView } from "../Timer/TimerView";
 import { clearTimerState } from "../../redux/timerSlice";
 import { RootState } from "../../redux/rootReducer";
-import { findSmallestNumber, parseTime } from "../../utils/helpers";
+import {
+  createImageItemsArray,
+  findSmallestNumber,
+  parseTime,
+} from "../../utils/helpers";
+import { imgArray } from "../../utils/constants";
 
 export const Congrats: React.FC = () => {
   const { totalTime, bestTime } = useSelector(
@@ -43,7 +47,7 @@ export const Congrats: React.FC = () => {
       )}
       <SingleButton
         onButtonClick={() => {
-          dispatch(resetAllState(complitedRandomImages));
+          dispatch(resetAllState(createImageItemsArray(imgArray)));
           dispatch(clearTimerState());
         }}
         buttonText="Let`s play again"

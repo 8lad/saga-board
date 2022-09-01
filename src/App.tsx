@@ -9,17 +9,18 @@ import { RootState } from "./redux/rootReducer";
 import { SingleButton } from "./components/SingleButton/SingleButton";
 import { clearTimerState } from "./redux/timerSlice";
 import { createImageItemsArray } from "./utils/helpers";
+import { Slider } from "./components/Slider/Slider";
 
 function App() {
   const dispatch = useDispatch();
   const { gameState } = useSelector((state: RootState) => state.cardsReducer);
   const isShowTimer = gameState === GameState.PLAYING;
-  const isShowHeader = gameState === GameState.START;
+  const isGameStart = gameState === GameState.START;
   const isShowReset = gameState === GameState.PLAYING;
 
   return (
     <div className="App ">
-      {isShowHeader && <Header />}
+      {isGameStart && <Header />}
       {isShowTimer && <Timer />}
       {isShowReset && (
         <SingleButton
@@ -34,6 +35,7 @@ function App() {
       <div className="container mx-auto my-0 w-5/6 px-3">
         <CardsContainer />
       </div>
+      {isGameStart && <Slider />}
     </div>
   );
 }
