@@ -1,13 +1,17 @@
+import { clsx } from "clsx";
+
 interface SingleButtonProps {
   onButtonClick: () => void;
   buttonText: string;
+  extraClasses: string;
 }
 
 export const SingleButton: React.FC<SingleButtonProps> = ({
   onButtonClick,
   buttonText,
+  extraClasses = "",
 }) => (
-  <div className="w-full  mt-20 mx-auto text-center">
+  <div className={clsx(extraClasses)}>
     <button
       type="button"
       onClick={onButtonClick}

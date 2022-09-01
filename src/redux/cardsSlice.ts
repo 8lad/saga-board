@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { complitedRandomImages } from "../utils/constants";
 import { CartImageOptions } from "../utils/helpers";
 
 export enum GameState {
@@ -10,77 +9,90 @@ export enum GameState {
 
 export interface InitialState {
   cards: CartImageOptions[];
-  fistCard: string;
+  firstCard: string;
   secondCard: string;
-  GameState: GameState;
+  gameState: GameState;
   clickCounter: number;
+  matchedId: number;
 }
 
 const initialState = {
-  cards: complitedRandomImages,
-  fistCard: "",
+  cards: [] as CartImageOptions[],
+  firstCard: "",
   secondCard: "",
   gameState: GameState.START,
   clickCounter: 0,
+  matchedId: null as null | number,
 };
 
 const cardsSlice = createSlice({
   name: "cards",
   initialState,
   reducers: {
+    setAllImages: (state, action: PayloadAction<CartImageOptions[]>) => {
+      state.cards = action.payload;
+    },
     changeGameState: (state, action: PayloadAction<GameState>) => {
       state.gameState = action.payload;
+    },
+    setMatchedCards: (state) => {
+      state.cards = state.cards.map((card) =>
+        card.imageUrl === state.firstCard ? { ...card, isMatched: true } : card,
+      );
+      state.clickCounter = 0;
+      state.firstCard = "";
+      state.secondCard = "";
+    },
+    resetMatchedCards: (state) => {
+      state.cards = state.cards.map((card) => ({ ...card, isRotated: false }));
+      state.clickCounter = 0;
+      state.firstCard = "";
+      state.secondCard = "";
+    },
+    setEndTheGame: (state) => {
+      state.gameState = GameState.END;
+      state.clickCounter = 0;
+      state.firstCard = "";
+      state.secondCard = "";
+      state.cards = initialState.cards;
     },
     setMatchData: (
       state,
       action: PayloadAction<{ id: number; imageUrl: string }>,
     ) => {
-      const allCompleted = state.cards.every((card) => card.isMatched);
       const { id, imageUrl } = action.payload;
-      const isBothMatched = state.fistCard === state.secondCard;
-      if (allCompleted) {
-        state.gameState = GameState.END;
-        return;
-      }
-      if (!state.fistCard && state.clickCounter === 0) {
-        state.fistCard = imageUrl;
+      if (state.clickCounter === 0) {
+        state.matchedId = id;
+        state.firstCard = imageUrl;
         state.cards = state.cards.map((card) =>
           card.id === id ? { ...card, isRotated: true } : card,
         );
         state.clickCounter++;
         return;
       }
-      if (!state.secondCard && state.clickCounter === 1) {
+      if (state.clickCounter === 1 && state.matchedId !== id) {
         state.secondCard = imageUrl;
         state.cards = state.cards.map((card) =>
           card.id === id ? { ...card, isRotated: true } : card,
         );
         state.clickCounter++;
-        return;
       }
-      if (isBothMatched) {
-        state.cards = state.cards.map((card) =>
-          card.imageUrl === state.fistCard
-            ? { ...card, isMatched: true }
-            : card,
-        );
-        state.clickCounter = 0;
-        state.fistCard = "";
-        state.secondCard = "";
-        return;
-      }
-      state.clickCounter = 0;
-      state.fistCard = "";
-      state.secondCard = "";
-      state.cards = state.cards.map((card) => ({ ...card, isRotated: false }));
     },
-    resetAllState: () => ({
+    resetAllState: (_, action: PayloadAction<CartImageOptions[]>) => ({
       ...initialState,
-      gameState: GameState.PLAYING,
+      cards: action.payload,
+      gameState: GameState.START,
     }),
   },
 });
 
 export const cardsReducer = cardsSlice.reducer;
-export const { resetAllState, changeGameState, setMatchData } =
-  cardsSlice.actions;
+export const {
+  resetAllState,
+  changeGameState,
+  setMatchData,
+  setAllImages,
+  setMatchedCards,
+  resetMatchedCards,
+  setEndTheGame,
+} = cardsSlice.actions;

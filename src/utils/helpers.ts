@@ -33,3 +33,32 @@ export function createImageItemsArray(arr: string[]): CartImageOptions[] {
   );
   return baseArray;
 }
+
+export type TimeFormat = "minutes" | "seconds" | "";
+
+export function parseTime(
+  time: number,
+  format: TimeFormat = "",
+): string | number {
+  if (format === "minutes") {
+    return (time / 60000) % 60 < 10
+      ? `0${Math.floor(time / 60000) % 60}`
+      : Math.floor(time / 60000) % 60;
+  }
+  if (format === "seconds") {
+    return Math.floor(time / 1000) % 60 < 10
+      ? `0${Math.floor(time / 1000) % 60}`
+      : Math.floor(time / 1000) % 60;
+  }
+  return time % 100 < 10 ? `0${time % 100}` : time % 100;
+}
+
+export function findSmallestNumber(arr: number[]): number {
+  const resultedArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (!arr[i + 1]) break;
+    const differenceTime = arr[i + 1] - arr[i];
+    resultedArr.push(differenceTime);
+  }
+  return Math.min(...resultedArr.slice(0, -1));
+}
