@@ -39,7 +39,7 @@ export const Timer: React.FC = () => {
     };
   }, [counter, gameState]);
   return (
-    <div className="absolute right-7 top-7">
+    <div className="mb-4">
       <TimerView counter={counter} />
     </div>
   );

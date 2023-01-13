@@ -1,6 +1,5 @@
 .cardbox {
   perspective: 500px;
-  margin: 15px;
   outline: none;
   &.active .card {
     transform: rotateY(180deg);
@@ -10,12 +9,11 @@
 .card {
   position: relative;
   border-radius: 5%;
-  width: 180px;
-  height: 180px;
   background: #fff;
   transform-style: preserve-3d;
   transition: 0.8s ease;
   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
   cursor: pointer;
   &--bg {
     background: rgb(34, 193, 195);
@@ -24,26 +22,6 @@
       rgba(34, 193, 195, 1) 0%,
       rgba(77, 31, 82, 1) 89%
     );
-  }
-  @media (max-width: 1650px) {
-    width: 160px;
-    height: 160px;
-  }
-  @media (max-width: 1400px) {
-    width: 130px;
-    height: 130px;
-  }
-  @media (max-width: 1198px) {
-    width: 110px;
-    height: 110px;
-  }
-  @media (max-width: 1054px) {
-    width: 90px;
-    height: 90px;
-  }
-  @media (max-width: 894px) {
-    width: 70px;
-    height: 70px;
   }
 }
 
@@ -55,12 +33,6 @@
   height: 100%;
   color: #fff;
   backface-visibility: hidden;
-  &.card-back--matched {
-    filter: sepia(100%);
-  }
-}
-
-.card-back {
   font-size: 25px;
   justify-content: center;
   text-align: center;
@@ -71,4 +43,7 @@
   background-position: center;
   transform: rotateY(180deg);
   border-radius: 5%;
+  &.card-back--matched {
+    filter: sepia(100%);
+  }
 }

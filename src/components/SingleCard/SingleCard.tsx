@@ -17,7 +17,7 @@ const SingleCard: React.FC<CartImageOptions> = ({
       className={clsx("cardbox", (isRotated || isMatched) && "active")}
       onClick={() => dispatch(setMatchData({ imageUrl, id }))}
     >
-      <div className="card card--bg">
+      <div className="card card--bg w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40">
         <div
           className={clsx("card-back", isMatched && "card-back--matched")}
           style={{

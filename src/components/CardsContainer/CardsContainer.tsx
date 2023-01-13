@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { clsx } from "clsx";
 import SingleCard from "../SingleCard/SingleCard";
-import { CartImageOptions, createImageItemsArray } from "../../utils/helpers";
 import { SingleButton } from "../SingleButton/SingleButton";
 import {
   changeGameState,
@@ -11,8 +11,9 @@ import {
   setEndTheGame,
   setAllImages,
 } from "../../redux/cardsSlice";
-import { RootState } from "../../redux/rootReducer";
 import { Congrats } from "../Congrats/Congrats";
+import { RootState } from "../../redux/rootReducer";
+import { CartImageOptions, createImageItemsArray } from "../../utils/helpers";
 import { addBestTimeItem } from "../../redux/timerSlice";
 import { imgArray } from "../../utils/constants";
 
@@ -32,6 +33,17 @@ export function CardsContainer() {
   const isAllCompleted =
     cards.every((card) => card.isMatched) && gameState !== GameState.START;
   const isRenderCongrats = gameState === GameState.END;
+
+  const startGameClick = () => {
+    dispatch(changeGameState(GameState.PLAYING));
+    dispatch(addBestTimeItem(Date.now()));
+    dispatch(setAllImages(createImageItemsArray(imgArray)));
+  };
+
+  const cardsContainerClasses = clsx(
+    "grid grid-cols-big-screen gap-6 justify-items-center items-center content-center justify-center py-6 mx-auto ",
+    (isRenderCards || isRenderCongrats) && "h-full",
+  );
 
   useEffect(() => {
     if (isMatchedCards) {
@@ -60,20 +72,18 @@ export function CardsContainer() {
   ]);
 
   return (
-    <div className="w-3/5 md:w-2/3 sm:w-5/6 flex items-center justify-between py-6 flex-wrap mx-auto">
+    <>
       {gameState === GameState.START && (
         <SingleButton
-          onButtonClick={() => {
-            dispatch(changeGameState(GameState.PLAYING));
-            dispatch(addBestTimeItem(Date.now()));
-            dispatch(setAllImages(createImageItemsArray(imgArray)));
-          }}
-          extraClasses="w-full  mt-20 mx-auto text-center"
+          onButtonClick={startGameClick}
+          extraClasses="w-full mt-20 mx-auto text-center"
           buttonText="Let`s start"
         />
       )}
-      {isRenderCards && allCartImg}
-      {isRenderCongrats && <Congrats />}
-    </div>
+      <div className={cardsContainerClasses}>
+        {isRenderCards && allCartImg}
+        {isRenderCongrats && <Congrats />}
+      </div>
+    </>
   );
 }
