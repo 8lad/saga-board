@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { clsx } from "clsx";
 import SingleCard from "../SingleCard/SingleCard";
 import { SingleButton } from "../SingleButton/SingleButton";
@@ -12,15 +11,15 @@ import {
   setAllImages,
 } from "../../redux/cardsSlice";
 import { Congrats } from "../Congrats/Congrats";
-import { RootState } from "../../redux/rootReducer";
 import { CartImageOptions, createImageItemsArray } from "../../utils/helpers";
 import { addBestTimeItem } from "../../redux/timerSlice";
 import { imgArray } from "../../utils/constants";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 export function CardsContainer() {
-  const dispatch = useDispatch();
-  const { gameState, cards, firstCard, secondCard } = useSelector(
-    (state: RootState) => state.cardsReducer,
+  const dispatch = useAppDispatch();
+  const { gameState, cards, firstCard, secondCard } = useAppSelector(
+    (state) => state.cardsReducer,
   );
   const isRenderCards = gameState === GameState.PLAYING && !!cards.length;
   const allCartImg = cards.map((item: CartImageOptions) => (
@@ -71,6 +70,10 @@ export function CardsContainer() {
     isAllCompleted,
   ]);
 
+  if (isRenderCongrats) {
+    return <Congrats />;
+  }
+
   return (
     <>
       {gameState === GameState.START && (
@@ -80,10 +83,7 @@ export function CardsContainer() {
           buttonText="Let`s start"
         />
       )}
-      <div className={cardsContainerClasses}>
-        {isRenderCards && allCartImg}
-        {isRenderCongrats && <Congrats />}
-      </div>
+      <div className={cardsContainerClasses}>{isRenderCards && allCartImg}</div>
     </>
   );
 }

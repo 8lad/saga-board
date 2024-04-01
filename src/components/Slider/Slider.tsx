@@ -17,7 +17,7 @@ export const Slider: React.FC = () => {
     </SwiperSlide>
   ));
   return (
-    <div className="w-full pt-10">
+    <div className="max-w-[700px] pt-10 mr-auto ml-auto">
       <Swiper
         effect="cube"
         modules={[EffectCube, Pagination, Autoplay]}

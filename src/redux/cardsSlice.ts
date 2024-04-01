@@ -13,13 +13,13 @@ export interface InitialState {
   secondCard: string;
   gameState: GameState;
   clickCounter: number;
-  matchedId: number;
+  matchedId: null | number;
 }
 
-const initialState = {
-  cards: [] as CartImageOptions[],
-  firstCard: "",
+const initialState: InitialState = {
+  cards: [],
   secondCard: "",
+  firstCard: "",
   gameState: GameState.START,
   clickCounter: 0,
   matchedId: null as null | number,
@@ -36,7 +36,7 @@ const cardsSlice = createSlice({
       state.gameState = action.payload;
     },
     setMatchedCards: (state) => {
-      state.cards = state.cards.map((card) =>
+      state.cards = state.cards.map((card: CartImageOptions) =>
         card.imageUrl === state.firstCard ? { ...card, isMatched: true } : card,
       );
       state.clickCounter = 0;
@@ -44,7 +44,10 @@ const cardsSlice = createSlice({
       state.secondCard = "";
     },
     resetMatchedCards: (state) => {
-      state.cards = state.cards.map((card) => ({ ...card, isRotated: false }));
+      state.cards = state.cards.map((card: CartImageOptions) => ({
+        ...card,
+        isRotated: false,
+      }));
       state.clickCounter = 0;
       state.firstCard = "";
       state.secondCard = "";
@@ -64,7 +67,7 @@ const cardsSlice = createSlice({
       if (state.clickCounter === 0) {
         state.matchedId = id;
         state.firstCard = imageUrl;
-        state.cards = state.cards.map((card) =>
+        state.cards = state.cards.map((card: CartImageOptions) =>
           card.id === id ? { ...card, isRotated: true } : card,
         );
         state.clickCounter++;
@@ -72,7 +75,7 @@ const cardsSlice = createSlice({
       }
       if (state.clickCounter === 1 && state.matchedId !== id) {
         state.secondCard = imageUrl;
-        state.cards = state.cards.map((card) =>
+        state.cards = state.cards.map((card: CartImageOptions) =>
           card.id === id ? { ...card, isRotated: true } : card,
         );
         state.clickCounter++;

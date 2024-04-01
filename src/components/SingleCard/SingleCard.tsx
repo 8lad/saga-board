@@ -1,8 +1,8 @@
-import { useDispatch } from "react-redux";
 import clsx from "clsx";
 import { setMatchData } from "../../redux/cardsSlice";
 import { CartImageOptions } from "../../utils/helpers";
 import "./SingleCard.scss";
+import { useAppDispatch } from "../../redux/store";
 
 const SingleCard: React.FC<CartImageOptions> = ({
   id,
@@ -10,7 +10,7 @@ const SingleCard: React.FC<CartImageOptions> = ({
   isMatched,
   isRotated,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <div
