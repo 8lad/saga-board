@@ -7,7 +7,6 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
 export const Slider: React.FC = () => {
-  console.log("test");
   const imagesArray = sliderImgArray.map((image) => (
     <SwiperSlide key={image}>
       <img
