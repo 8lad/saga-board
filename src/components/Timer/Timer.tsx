@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { GameState } from "../../redux/cardsSlice";
-import { RootState } from "../../redux/rootReducer";
 import { addTotalTime } from "../../redux/timerSlice";
 import { TimerView } from "./TimerView";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 export const Timer: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [counter, setCounter] = useState<number>(0);
-  const { cards, gameState } = useSelector(
-    (state: RootState) => state.cardsReducer,
-  );
+  const { cards, gameState } = useAppSelector((state) => state.cardsReducer);
   const isAllMatched = cards.every((item) => item.isMatched);
 
   useEffect(() => {

@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
-import { useDispatch, useSelector } from "react-redux";
 import { SingleButton } from "../SingleButton/SingleButton";
-import { resetAllState, GameState } from "../../redux/cardsSlice";
+import {
+  GameState,
+  setAllImages,
+  changeGameState,
+  resetAllState,
+} from "../../redux/cardsSlice";
 import { TimerView } from "../Timer/TimerView";
-import { clearTimerState } from "../../redux/timerSlice";
-import { RootState } from "../../redux/rootReducer";
+import { addBestTimeItem, clearTimerState } from "../../redux/timerSlice";
 import {
   createImageItemsArray,
   findSmallestNumber,
   parseTime,
 } from "../../utils/helpers";
 import { imgArray } from "../../utils/constants";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 export const Congrats: React.FC = () => {
-  const { totalTime, bestTime } = useSelector(
-    (state: RootState) => state.timerReducer,
-  );
+  const { totalTime, bestTime } = useAppSelector((state) => state.timerReducer);
   const [bestFindCards, setBestFindCards] = useState<number>(0);
-  const { gameState } = useSelector((state: RootState) => state.cardsReducer);
+  const { gameState } = useAppSelector((state) => state.cardsReducer);
   const isTotalTimeShow = gameState === GameState.END && totalTime > 0;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const bestTimePairCards: number =
@@ -47,10 +49,20 @@ export const Congrats: React.FC = () => {
       )}
       <SingleButton
         onButtonClick={() => {
+          dispatch(clearTimerState());
+          dispatch(changeGameState(GameState.PLAYING));
+          dispatch(addBestTimeItem(Date.now()));
+          dispatch(setAllImages(createImageItemsArray(imgArray)));
+        }}
+        buttonText="Let`s play again"
+        extraClasses="w-full  mt-20 mx-auto text-center"
+      />
+      <SingleButton
+        onButtonClick={() => {
           dispatch(resetAllState(createImageItemsArray(imgArray)));
           dispatch(clearTimerState());
         }}
-        buttonText="Let`s play again"
+        buttonText="Go back"
         extraClasses="w-full  mt-20 mx-auto text-center"
       />
     </div>

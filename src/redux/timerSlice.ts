@@ -5,8 +5,8 @@ export interface InitialState {
   totalTime: number;
 }
 
-const initialState = {
-  bestTime: [] as number[],
+const initialState: InitialState = {
+  bestTime: [],
   totalTime: 0,
 };
 

@@ -33,3 +33,5 @@ export const sliderImgArray = [
   fifthImgSlider,
   sixthImgSlider,
 ];
+
+export const MIN_SCREEN_SIZE = 1170;
