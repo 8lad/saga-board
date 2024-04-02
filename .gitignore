@@ -5,6 +5,7 @@
 /saga_board_function
 /.pnp
 .pnp.js
+/.firebase*
 
 # testing
 /coverage
