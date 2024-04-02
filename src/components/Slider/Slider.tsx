@@ -9,15 +9,11 @@ import "swiper/css/autoplay";
 export const Slider: React.FC = () => {
   const imagesArray = sliderImgArray.map((image) => (
     <SwiperSlide key={image}>
-      <img
-        className="max-h-[500px] w-full object-cover"
-        src={image}
-        alt={image}
-      />
+      <img className="h-full w-full object-cover" src={image} alt={image} />
     </SwiperSlide>
   ));
   return (
-    <div className="max-w-[700px] pt-10 mr-auto ml-auto">
+    <div className="max-w-[50vw] h-[50vh] pt-10 mr-auto ml-auto">
       <Swiper
         effect="cube"
         modules={[EffectCube, Pagination, Autoplay]}

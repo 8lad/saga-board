@@ -79,11 +79,13 @@ export function CardsContainer() {
       {gameState === GameState.START && (
         <SingleButton
           onButtonClick={startGameClick}
-          extraClasses="w-full mt-20 mx-auto text-center"
+          extraClasses="w-full mt-10 mx-auto text-center"
           buttonText="Let`s start"
         />
       )}
-      <div className={cardsContainerClasses}>{isRenderCards && allCartImg}</div>
+      {isRenderCards && (
+        <div className={cardsContainerClasses}>{allCartImg}</div>
+      )}
     </>
   );
 }
