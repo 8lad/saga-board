@@ -12,11 +12,12 @@ export const useScreenSize = () => {
   });
 
   useEffect(() => {
+    setScreenSize({ width: window.innerWidth, height: window.innerHeight });
+
     const resizeHandler = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      setScreenSize({ width, height });
+      setScreenSize({ width: window.innerWidth, height: window.innerHeight });
     };
+
     window.addEventListener("resize", resizeHandler);
     return () => {
       window.removeEventListener("resize", resizeHandler);

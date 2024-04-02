@@ -36,7 +36,7 @@ function App() {
 
   const isSmallScreen = width < MIN_SCREEN_SIZE;
 
-  if (isSmallScreen) {
+  if (!isShowPreloader && isSmallScreen) {
     return <SmallScreenNotification />;
   }
 
