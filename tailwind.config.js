@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         "main-bg": "#282C34",
       },
+      screens: {
+        "short": { "raw": "(max-height: 800px)" }
+      }
     },
   },
   plugins: [],
