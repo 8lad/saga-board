@@ -1,0 +1,19 @@
+{
+  "button": {
+    "start": "Let's start",
+    "go-back": "Go back",
+    "play-again": "Let`s play again",
+    "reset": "Reset game"
+  },
+  "title": {
+    "best-tipe-pair": "Your best time to finding the pair is: ",
+    "game-time": "Your game time is:",
+    "congratulations": "Congratulations 😄 You are the winner",
+    "header": "This is the pictures card game. Enjoy 😃",
+    "small-screen": "If you want to play this game, please use a screen with a size larger than "
+  },
+  "measure": {
+    "pixels": "pixels",
+    "seconds": "seconds"
+  }
+}

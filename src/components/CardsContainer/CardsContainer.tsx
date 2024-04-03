@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { clsx } from "clsx";
+import { useTranslation } from "react-i18next";
 import SingleCard from "../SingleCard/SingleCard";
 import { SingleButton } from "../SingleButton/SingleButton";
 import {
@@ -70,6 +71,8 @@ export function CardsContainer() {
     isAllCompleted,
   ]);
 
+  const { t } = useTranslation();
+
   if (isRenderCongrats) {
     return <Congrats />;
   }
@@ -80,7 +83,7 @@ export function CardsContainer() {
         <SingleButton
           onButtonClick={startGameClick}
           extraClasses="w-full mt-10 mx-auto text-center"
-          buttonText="Let`s start"
+          buttonText={t("button.start")}
         />
       )}
       {isRenderCards && (

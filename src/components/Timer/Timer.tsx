@@ -16,7 +16,7 @@ export const Timer: React.FC = () => {
 
   useEffect(() => {
     const baseTime = Date.now();
-    let countingTime: any;
+    let countingTime: NodeJS.Timer | undefined;
     if (gameState === GameState.START) {
       setCounter(0);
     }
@@ -27,7 +27,7 @@ export const Timer: React.FC = () => {
       }, 10);
     }
 
-    if (gameState !== GameState.PLAYING) {
+    if (gameState !== GameState.PLAYING && countingTime) {
       clearInterval(countingTime);
     }
 

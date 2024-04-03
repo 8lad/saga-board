@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { CardsContainer } from "./components/CardsContainer/CardsContainer";
 import { Header } from "./components/Header/Header";
 import { GameState, resetAllState } from "./redux/cardsSlice";
@@ -24,11 +25,14 @@ function App() {
     dispatch(resetAllState(createImageItemsArray(imgArray)));
     dispatch(clearTimerState());
   };
+  const { t } = useTranslation();
 
   const { width } = useScreenSize();
 
   useEffect(() => {
     setTimeout(() => setIsShowPreloader(false), 2000);
+    const { language } = navigator;
+    localStorage.setItem("i18nextLng", language);
     return () => {
       setIsShowPreloader(false);
     };
@@ -49,7 +53,7 @@ function App() {
         {isShowReset && (
           <SingleButton
             onButtonClick={resetGameClick}
-            buttonText="Reset game"
+            buttonText={t("button.reset")}
             extraClasses="mt-0 text-center lg:text-right"
           />
         )}
