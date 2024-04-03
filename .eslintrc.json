@@ -40,6 +40,8 @@
     "react/function-component-definition": "off",
     "react/prop-types": "off",
     "no-param-reassign": "off",
-    "no-return-assign": "off"
+    "no-return-assign": "off",
+    "prettier/prettier": 0
   }
 }
+
