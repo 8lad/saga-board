@@ -1,5 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# TODO need to fix lint script in package.json
-yarn lint
+yarn lint && yarn build
