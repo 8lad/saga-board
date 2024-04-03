@@ -4,6 +4,7 @@
     "es2021": true,
     "jest": true
   },
+  "root": true,
   "extends": [
     "react-app",
     "react-app/jest",
@@ -44,4 +45,3 @@
     "prettier/prettier": 0
   }
 }
-
