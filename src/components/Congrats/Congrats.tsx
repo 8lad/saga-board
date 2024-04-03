@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Confetti from "react-confetti";
 import { SingleButton } from "../SingleButton/SingleButton";
 import {
@@ -23,6 +24,7 @@ export const Congrats: React.FC = () => {
   const { gameState } = useAppSelector((state) => state.cardsReducer);
   const isTotalTimeShow = gameState === GameState.END && totalTime > 0;
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const bestTimePairCards: number =
@@ -33,17 +35,17 @@ export const Congrats: React.FC = () => {
   return (
     <div className="w-full mx-auto text-center pt-20">
       <Confetti />
-      <h1 className="text-4xl">Congratulations 😄 You are the winner</h1>
+      <h1 className="text-4xl">{t("title.congratulations")}</h1>
       {isTotalTimeShow && (
         <div>
-          <h2 className="mb-2 pt-4 text-2xl">Your game time is: </h2>
+          <h2 className="mb-2 pt-4 text-2xl">{t("title.game-time")} </h2>
           <TimerView counter={totalTime} />
         </div>
       )}
       {!!bestFindCards && (
         <div>
           <h2 className="mb-2 pt-8 text-2xl">
-            Your best time to finding the pair is: {bestFindCards} seconds
+            {t("title.best-tipe-pair")} {bestFindCards} {t("measure.seconds")}
           </h2>
         </div>
       )}
@@ -54,7 +56,7 @@ export const Congrats: React.FC = () => {
           dispatch(addBestTimeItem(Date.now()));
           dispatch(setAllImages(createImageItemsArray(imgArray)));
         }}
-        buttonText="Let`s play again"
+        buttonText={t("button.play-again")}
         extraClasses="w-full  mt-20 mx-auto text-center"
       />
       <SingleButton
@@ -62,7 +64,7 @@ export const Congrats: React.FC = () => {
           dispatch(resetAllState(createImageItemsArray(imgArray)));
           dispatch(clearTimerState());
         }}
-        buttonText="Go back"
+        buttonText={t("button.go-back")}
         extraClasses="w-full  mt-20 mx-auto text-center"
       />
     </div>
