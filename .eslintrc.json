@@ -42,6 +42,7 @@
     "react/prop-types": "off",
     "no-param-reassign": "off",
     "no-return-assign": "off",
-    "prettier/prettier": 0
+    "prettier/prettier": 0,
+    "no-await-in-loop": "off"
   }
 }

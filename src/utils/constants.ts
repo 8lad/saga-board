@@ -35,3 +35,7 @@ export const sliderImgArray = [
 ];
 
 export const MIN_SCREEN_SIZE = 1170;
+
+export const RANDOM_IMAGES_AMOUNT = 8;
+export const RANDOM_SINGLE_IMG_URL = "/300/300.webp";
+export const BASE_URL = "https://picsum.photos";

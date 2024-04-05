@@ -15,16 +15,28 @@ import {
   findSmallestNumber,
   parseTime,
 } from "../../utils/helpers";
-import { imgArray } from "../../utils/constants";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 export const Congrats: React.FC = () => {
   const { totalTime, bestTime } = useAppSelector((state) => state.timerReducer);
-  const [bestFindCards, setBestFindCards] = useState<number>(0);
   const { gameState } = useAppSelector((state) => state.cardsReducer);
+  const { images } = useAppSelector((state) => state.randonImagesReducer);
+  const [bestFindCards, setBestFindCards] = useState<number>(0);
   const isTotalTimeShow = gameState === GameState.END && totalTime > 0;
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
+  const playAgainHandler = () => {
+    dispatch(clearTimerState());
+    dispatch(changeGameState(GameState.PLAYING));
+    dispatch(addBestTimeItem(Date.now()));
+    dispatch(setAllImages(createImageItemsArray(images)));
+  };
+
+  const goBackHandler = () => {
+    dispatch(resetAllState(createImageItemsArray(images)));
+    dispatch(clearTimerState());
+  };
 
   useEffect(() => {
     const bestTimePairCards: number =
@@ -50,20 +62,12 @@ export const Congrats: React.FC = () => {
         </div>
       )}
       <SingleButton
-        onButtonClick={() => {
-          dispatch(clearTimerState());
-          dispatch(changeGameState(GameState.PLAYING));
-          dispatch(addBestTimeItem(Date.now()));
-          dispatch(setAllImages(createImageItemsArray(imgArray)));
-        }}
+        onButtonClick={playAgainHandler}
         buttonText={t("button.play-again")}
         extraClasses="w-full  mt-20 mx-auto text-center"
       />
       <SingleButton
-        onButtonClick={() => {
-          dispatch(resetAllState(createImageItemsArray(imgArray)));
-          dispatch(clearTimerState());
-        }}
+        onButtonClick={goBackHandler}
         buttonText={t("button.go-back")}
         extraClasses="w-full  mt-20 mx-auto text-center"
       />
