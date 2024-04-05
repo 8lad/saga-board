@@ -14,7 +14,6 @@ import {
 import { Congrats } from "../Congrats/Congrats";
 import { CartImageOptions, createImageItemsArray } from "../../utils/helpers";
 import { addBestTimeItem } from "../../redux/timerSlice";
-import { imgArray } from "../../utils/constants";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 export function CardsContainer() {
@@ -22,8 +21,9 @@ export function CardsContainer() {
   const { gameState, cards, firstCard, secondCard } = useAppSelector(
     (state) => state.cardsReducer,
   );
+  const { images } = useAppSelector((state) => state.randonImagesReducer);
   const isRenderCards = gameState === GameState.PLAYING && !!cards.length;
-  const allCartImg = cards.map((item: CartImageOptions) => (
+  const allCardsImg = cards.map((item: CartImageOptions) => (
     <SingleCard key={item.id + item.imageUrl} {...item} />
   ));
   const isMatchedCards =
@@ -37,7 +37,7 @@ export function CardsContainer() {
   const startGameClick = () => {
     dispatch(changeGameState(GameState.PLAYING));
     dispatch(addBestTimeItem(Date.now()));
-    dispatch(setAllImages(createImageItemsArray(imgArray)));
+    dispatch(setAllImages(createImageItemsArray(images)));
   };
 
   const cardsContainerClasses = clsx(
@@ -87,7 +87,7 @@ export function CardsContainer() {
         />
       )}
       {isRenderCards && (
-        <div className={cardsContainerClasses}>{allCartImg}</div>
+        <div className={cardsContainerClasses}>{allCardsImg}</div>
       )}
     </>
   );
